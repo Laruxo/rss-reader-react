@@ -1,0 +1,98 @@
+@import './variables';
+
+.feed-input {
+  text-align: center;
+  margin: $base-margin;
+
+  &__row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+  }
+
+  &__url {
+    height: 3.5rem;
+    border-bottom: 1px solid $brand-color;
+    display: inline-block;
+    position: relative;
+    flex-grow: 1;
+
+    &-input {
+      color: $primary-text-color;
+      border: none;
+      padding: 1.25rem 0 0;
+      font-size: 2rem;
+      width: 100%;
+
+      &:active,
+      &:focus {
+        outline: none;
+      }
+
+      &.invalid,
+      &:invalid {
+        border-bottom: 1px solid $invalid-color;
+
+        ~ .feed-input__url-label {
+          color: $invalid-color;
+        }
+      }
+    }
+
+    &-label {
+      color: $brand-color;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  &__button {
+    color: $brand-color;
+    background: none;
+    font-size: 2rem;
+    line-height: 1;
+    padding: 0;
+    width: 2rem;
+    margin-left: $small-margin;
+
+    &:hover {
+      background: $active-color;
+    }
+
+    &--loading {
+      animation: spin 1s infinite;
+
+      &:hover {
+        background: none;
+      }
+
+      @keyframes spin {
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    }
+  }
+
+  &__history {
+    padding: 0;
+    list-style: none;
+    margin: $small-margin 0;
+    text-align: left;
+
+    &-item {
+      display: block;
+      cursor: pointer;
+      padding: $small-margin 0;
+      color: $brand-color;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+
+      &:hover {
+        background: $active-color;
+      }
+    }
+  }
+}
