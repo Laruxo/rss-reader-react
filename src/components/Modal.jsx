@@ -10,16 +10,21 @@ export default class Modal extends React.Component {
     };
   }
 
+  static propTypes = {
+    item: PropTypes.shape({
+      title: PropTypes.string,
+      link: PropTypes.string,
+      content: PropTypes.string,
+      description: PropTypes.string,
+    }),
+  };
+
   close() {
-    this.setState({
-      visible: false,
-    });
+    this.setState({visible: false});
   }
 
   componentDidMount() {
-    this.setState({
-      visible: true,
-    });
+    this.setState({visible: true});
   }
 
   render() {
@@ -35,19 +40,10 @@ export default class Modal extends React.Component {
           <h2>{this.props.item.title}</h2>
           <a className="button modal__action" target="_blank"
             href={this.props.item.link}>Read Full Story...</a>
-          <p>{this.props.item.description}</p>
-          <p>{this.props.item.content}</p>
+          <div dangerouslySetInnerHTML={{__html: this.props.item.description}}/>
+          <div dangerouslySetInnerHTML={{__html: this.props.item.content}}/>
         </dialog>
       </div>
     );
   }
 }
-
-Modal.propTypes = {
-  item: PropTypes.shape({
-    title: PropTypes.string,
-    link: PropTypes.string,
-    content: PropTypes.string,
-    description: PropTypes.string,
-  }),
-};

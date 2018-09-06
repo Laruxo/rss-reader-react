@@ -15,6 +15,10 @@ export default class FeedInput extends React.Component {
     };
   }
 
+  static propTypes = {
+    feedUpdate: PropTypes.func.isRequired,
+  };
+
   handleKeyUp(e) {
     if (e.key === 'Enter') {
       this.fetchFeed();
@@ -115,7 +119,3 @@ export default class FeedInput extends React.Component {
     );
   }
 }
-
-FeedInput.propTypes = {
-  feedUpdate: PropTypes.func.isRequired,
-};
