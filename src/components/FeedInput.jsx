@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import '../styles/FeedInput.scss';
 import 'promise-polyfill';
 import 'whatwg-fetch';
+import FeedHistory from './FeedHistory';
 
 export default class FeedInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      feedUrl: localStorage.getItem('lastUrl') || 'http://waitbutwhy.com/feed',
+      url: localStorage.getItem('lastUrl') || 'http://waitbutwhy.com/feed',
       isValid: true,
       isLoading: false,
       history: JSON.parse(localStorage.getItem('urlHistory')) || [],
@@ -19,41 +20,34 @@ export default class FeedInput extends React.Component {
     feedUpdate: PropTypes.func.isRequired,
   };
 
-  handleKeyUp(e) {
-    if (e.key === 'Enter') {
-      this.fetchFeed();
-    }
-  }
-
-  handleHistoryItemClick(item) {
-    this.setState({
-      feedUrl: item.url,
-    });
+  componentDidMount() {
     this.fetchFeed();
   }
 
-  fetchFeed() {
+  async fetchFeed(url = this.state.url) {
     this.setState({
+      url,
       isValid: true,
       isLoading: true,
     });
 
-    fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(this.state.feedUrl))
-      .then(response => response.json())
-      .then(this.handleResponse.bind(this))
-      .catch(e => {
-        console.error(e);
-        this.setState({
-          isValid: false,
-        });
+    try {
+      const response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(url));
+      const content = await response.json();
+      this.handleResponse(content);
+    } catch (e) {
+      console.error(e);
+      this.setState({
+        isValid: false,
       });
-  }
+    }
 
-  handleResponse(data) {
     this.setState({
       isLoading: false,
     });
+  }
 
+  handleResponse(data) {
     if (data.status === 'ok') {
       this.props.feedUpdate(data.items);
       this.updateHistory(data.feed);
@@ -85,8 +79,10 @@ export default class FeedInput extends React.Component {
     localStorage.setItem('lastUrl', feed.url);
   }
 
-  componentDidMount() {
-    this.fetchFeed();
+  handleKeyUp(e) {
+    if (e.key === 'Enter') {
+      this.fetchFeed();
+    }
   }
 
   render() {
@@ -94,9 +90,9 @@ export default class FeedInput extends React.Component {
       <div className="feed-input">
         <div className="feed-input__row">
           <div className="feed-input__url">
-            <input id="feed-url" type="url" value={this.state.feedUrl}
+            <input id="feed-url" type="url" value={this.state.url}
               className={'feed-input__url-input' + (this.state.isValid ? '' : ' invalid')}
-              onChange={e => this.setState({feedUrl: e.target.value})}
+              onChange={e => this.setState({url: e.target.value})}
               onKeyUp={e => this.handleKeyUp(e)}/>
             <label htmlFor="feed-url" className="feed-input__url-label">
               Enter URL
@@ -107,14 +103,7 @@ export default class FeedInput extends React.Component {
             {this.state.isLoading ? '\u21BB' : '\u276F'}
           </button>
         </div>
-        <ul className="feed-input__history">
-          {this.state.history.map(item =>
-            <li key={item.url} className="feed-input__history-item"
-              onClick={() => this.handleHistoryItemClick(item)}>
-              {item.title}
-            </li>
-          )}
-        </ul>
+        <FeedHistory history={this.state.history} onItemClick={(url) => this.fetchFeed(url)}/>
       </div>
     );
   }

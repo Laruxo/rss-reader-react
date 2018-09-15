@@ -22,7 +22,6 @@
   &__item {
     padding: $base-margin;
     cursor: pointer;
-    transition: transform .5s ease-out;
 
     &:hover {
       background: $active-color;
@@ -34,15 +33,6 @@
 
     &-description {
       margin: $small-margin 0 0;
-    }
-
-    &-enter {
-      transform: translateX(100%);
-    }
-
-    &-leave-active {
-      transition-timing-function: ease-in;
-      transform: translateX(-100%);
     }
   }
 }

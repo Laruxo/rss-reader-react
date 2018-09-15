@@ -9,7 +9,6 @@
   bottom: 0;
   justify-content: center;
   align-items: center;
-  transition-duration: .5s;
 
   &__backdrop {
     width: 100%;
@@ -39,21 +38,11 @@
     position: absolute;
     left: 0;
     right: 0;
-    transition: transform .5s ease-out;
 
     img {
       max-width: 100%;
       display: block;
       margin: 0 auto;
-    }
-
-    &-enter {
-      transform: translateY(100%);
-    }
-
-    &-leave-active {
-      transition-timing-function: ease-in;
-      transform: translateY(100%);
     }
   }
 }

@@ -53,6 +53,10 @@ export default class Feed extends React.Component {
     this.setState({activeItem: item});
   }
 
+  closeModal() {
+    this.setState({activeItem: null});
+  }
+
   render() {
     return (
       <div className="feed">
@@ -60,10 +64,10 @@ export default class Feed extends React.Component {
         <FeedHeader onSort={field => this.sortFeed(field)}/>
         <ol className="feed__list">
           {this.state.feed.map(
-            item => <FeedItem key={item.guid} item={item} onItemClick={() => this.openModal(item)}/>
+            ({guid, ...item}) => <FeedItem key={guid} item={item} onItemClick={() => this.openModal(item)}/>
           )}
         </ol>
-        <Modal item={this.state.activeItem}/>
+        <Modal item={this.state.activeItem} onClose={() => this.closeModal()}/>
       </div>
     );
   }

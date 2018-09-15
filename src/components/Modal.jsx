@@ -2,48 +2,34 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../styles/Modal.scss';
 
-export default class Modal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      visible: true,
-    };
+export default function Modal(props) {
+  if (!props.item) {
+    return null;
   }
 
-  static propTypes = {
-    item: PropTypes.shape({
-      title: PropTypes.string,
-      link: PropTypes.string,
-      content: PropTypes.string,
-      description: PropTypes.string,
-    }),
-  };
+  const {title, link, description, content} = props.item;
 
-  close() {
-    this.setState({visible: false});
-  }
-
-  componentDidMount() {
-    this.setState({visible: true});
-  }
-
-  render() {
-    if (!this.props.item || !this.state.visible) {
-      return null;
-    }
-
-    return (
-      <div className="modal">
-        <div className="modal__backdrop" onClick={() => this.close()}/>
-        <dialog className="modal__dialog">
-          <a className="modal__close" onClick={() => this.close()}>&times;</a>
-          <h2>{this.props.item.title}</h2>
-          <a className="button modal__action" target="_blank"
-            href={this.props.item.link}>Read Full Story...</a>
-          <div dangerouslySetInnerHTML={{__html: this.props.item.description}}/>
-          <div dangerouslySetInnerHTML={{__html: this.props.item.content}}/>
-        </dialog>
-      </div>
-    );
-  }
+  return (
+    <div className="modal">
+      <div className="modal__backdrop" onClick={() => props.onClose()}/>
+      <dialog className="modal__dialog">
+        <a className="modal__close" onClick={() => props.onClose()}>&times;</a>
+        <h2>{title}</h2>
+        <a className="button modal__action" target="_blank"
+           href={link}>Read Full Story...</a>
+        <div dangerouslySetInnerHTML={{__html: description}}/>
+        <div dangerouslySetInnerHTML={{__html: content}}/>
+      </dialog>
+    </div>
+  );
 }
+
+Modal.propTypes = {
+  item: PropTypes.shape({
+    title: PropTypes.string,
+    link: PropTypes.string,
+    description: PropTypes.string,
+    content: PropTypes.string,
+  }),
+  onClose: PropTypes.func,
+};
