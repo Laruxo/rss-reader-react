@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '../styles/FeedInput.scss';
-import 'promise-polyfill';
-import 'whatwg-fetch';
 import FeedHistory from './FeedHistory';
 
 export default class FeedInput extends React.Component {
@@ -79,11 +77,15 @@ export default class FeedInput extends React.Component {
     localStorage.setItem('lastUrl', feed.url);
   }
 
-  handleKeyUp(e) {
+  handleKeyUp = e => {
     if (e.key === 'Enter') {
       this.fetchFeed();
     }
-  }
+  };
+
+  handleUrlChange = e => {
+    this.setState({url: e.target.value});
+  };
 
   render() {
     return (
@@ -92,8 +94,8 @@ export default class FeedInput extends React.Component {
           <div className="feed-input__url">
             <input id="feed-url" type="url" value={this.state.url}
               className={'feed-input__url-input' + (this.state.isValid ? '' : ' invalid')}
-              onChange={e => this.setState({url: e.target.value})}
-              onKeyUp={e => this.handleKeyUp(e)}/>
+              onChange={this.handleUrlChange}
+              onKeyUp={this.handleKeyUp}/>
             <label htmlFor="feed-url" className="feed-input__url-label">
               Enter URL
             </label>
@@ -103,7 +105,7 @@ export default class FeedInput extends React.Component {
             {this.state.isLoading ? '\u21BB' : '\u276F'}
           </button>
         </div>
-        <FeedHistory history={this.state.history} onItemClick={(url) => this.fetchFeed(url)}/>
+        <FeedHistory history={this.state.history} onItemClick={url => this.fetchFeed(url)}/>
       </div>
     );
   }

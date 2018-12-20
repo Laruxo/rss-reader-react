@@ -3,10 +3,6 @@ import PropTypes from 'prop-types';
 import '../styles/Modal.scss';
 
 export default function Modal(props) {
-  if (!props.item) {
-    return null;
-  }
-
   const {title, link, description, content} = props.item;
 
   return (
@@ -30,6 +26,6 @@ Modal.propTypes = {
     link: PropTypes.string,
     description: PropTypes.string,
     content: PropTypes.string,
-  }),
+  }).isRequired,
   onClose: PropTypes.func,
 };
