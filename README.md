@@ -1,18 +1,21 @@
 # RSS Feed Reader
 
-Using React and Neutrino
+Using React
 
 ## Project setup
+
 ```
-yarn install
+yarn
 ```
 
 ### Compiles and hot-reloads for development
+
 ```
 yarn start
 ```
 
 ### Compiles and minifies for production
+
 ```
 yarn build
 ```

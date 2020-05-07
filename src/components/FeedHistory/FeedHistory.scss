@@ -1,0 +1,22 @@
+@import '../../style/variables';
+
+.feed-history {
+  padding: 0;
+  list-style: none;
+  margin: $base-margin 0;
+  text-align: left;
+
+  &__item {
+    display: block;
+    cursor: pointer;
+    padding: $small-margin 0;
+    color: $brand-color;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    &:hover {
+      background: $active-color;
+    }
+  }
+}

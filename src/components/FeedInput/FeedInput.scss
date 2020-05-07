@@ -1,8 +1,8 @@
-@import './variables';
+@import '../../style/variables';
 
 .feed-input {
   text-align: center;
-  margin: $base-margin;
+  margin: $base-margin 0;
 
   &__row {
     display: flex;
@@ -47,7 +47,7 @@
     }
   }
 
-  &__button {
+  .button {
     color: $brand-color;
     background: none;
     font-size: 2rem;
@@ -71,27 +71,6 @@
         100% {
           transform: rotate(360deg);
         }
-      }
-    }
-  }
-
-  &__history {
-    padding: 0;
-    list-style: none;
-    margin: $small-margin 0;
-    text-align: left;
-
-    &-item {
-      display: block;
-      cursor: pointer;
-      padding: $small-margin 0;
-      color: $brand-color;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-
-      &:hover {
-        background: $active-color;
       }
     }
   }

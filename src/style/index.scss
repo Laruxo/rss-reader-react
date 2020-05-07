@@ -23,12 +23,11 @@ a {
   color: $brand-color;
   text-decoration: none;
 
-&:hover {
-   opacity: .7;
- }
+  &:hover {
+    opacity: 0.7;
+  }
 }
 
-button,
 .button {
   display: inline-block;
   font-size: 1rem;
@@ -38,12 +37,12 @@ button,
   border-radius: 2px;
   border: 0;
 
-&:hover {
-  opacity: .9;
-}
+  &:hover {
+    opacity: 0.9;
+  }
 
-&:active,
-&:focus {
-   outline: none;
- }
+  &:active,
+  &:focus {
+    outline: none;
+  }
 }

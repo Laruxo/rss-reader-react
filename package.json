@@ -4,21 +4,30 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "neutrino build",
-    "start": "neutrino start",
-    "test": "neutrino test"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "lint": "eslint . --color"
   },
   "dependencies": {
-    "node-sass": "4.11.0",
-    "prop-types": "15.6.2",
-    "react": "16.7.0",
-    "react-dom": "16.7.0",
-    "react-hot-loader": "4.4.0",
-    "sass-loader": "7.1.0"
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "devDependencies": {
-    "@neutrinojs/jest": "8.3.0",
-    "@neutrinojs/react": "8.3.0",
-    "neutrino": "8.3.0"
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.2",
+    "node-sass": "^4.14.1",
+    "prettier": "^2.0.5",
+    "react-scripts": "^3.4.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": "eslint --fix",
+    "*.{js,json,css,scss,md}": "prettier --write"
   }
 }
