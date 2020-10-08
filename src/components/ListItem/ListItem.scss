@@ -1,0 +1,21 @@
+@import "../../style/variables";
+
+.feed__item {
+  border-top: 1px solid $active-color;
+  padding: $base-margin;
+  cursor: pointer;
+  outline: none;
+
+  &:hover,
+  &:focus {
+    background: $active-color;
+  }
+}
+
+.feed__item-date {
+  font-size: $small-font-size;
+}
+
+.feed__item-description {
+  margin: $small-margin 0 0;
+}
