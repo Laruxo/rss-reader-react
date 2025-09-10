@@ -1,17 +1,16 @@
-// @ts-ignore
-let storage: { [key: string]: string } = {};
+let storage: { [key: string]: string } = {}
 
 global.localStorage = {
-  getItem: jest.fn().mockImplementation((key: string) => storage[key]),
-  setItem: jest.fn().mockImplementation((key: string, value: string) => {
-    storage[key] = value;
+  getItem: vi.fn().mockImplementation((key: string) => storage[key]),
+  setItem: vi.fn().mockImplementation((key: string, value: string) => {
+    storage[key] = value
   }),
-  removeItem: jest.fn().mockImplementation((key: string) => {
-    delete storage[key];
+  removeItem: vi.fn().mockImplementation((key: string) => {
+    delete storage[key]
   }),
-  clear: jest.fn().mockImplementation(() => {
-    storage = {};
+  clear: vi.fn().mockImplementation(() => {
+    storage = {}
   }),
-  key: jest.fn(),
+  key: vi.fn(),
   length: 0,
-};
+}
