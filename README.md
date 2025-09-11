@@ -1,4 +1,4 @@
-# RSS Reader
+# RSS Feed Reader
 
 Using React and Typescript
 

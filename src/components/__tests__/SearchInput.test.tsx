@@ -14,13 +14,17 @@ vi.mock('../../utils/feedHistory', () => ({
 const onSubmit = vi.fn()
 
 it('should render input', () => {
-  const { getByTitle } = render(<SearchInput loading={false} onSubmit={onSubmit} />)
+  const { getByTitle } = render(
+    <SearchInput loading={false} onSubmit={onSubmit} />,
+  )
   const input = getByTitle('RSS URL')
   expect(input).toBeTruthy()
 })
 
 it('should render suggestions', () => {
-  const { getByTitle, getByText } = render(<SearchInput loading={false} onSubmit={onSubmit} />)
+  const { getByTitle, getByText } = render(
+    <SearchInput loading={false} onSubmit={onSubmit} />,
+  )
   const input = getByTitle('RSS URL')
   fireEvent.focus(input)
   expect(getByText('Suggestion 1')).toBeTruthy()
@@ -52,7 +56,9 @@ it('should filter suggestions', () => {
 })
 
 it('should do nothing on enter with invalid value', () => {
-  const { getByTitle } = render(<SearchInput loading={false} onSubmit={onSubmit} />)
+  const { getByTitle } = render(
+    <SearchInput loading={false} onSubmit={onSubmit} />,
+  )
   const input = getByTitle('RSS URL')
   fireEvent.change(input, { target: { value: 'test.local' } })
   fireEvent.keyDown(input, { key: 'Enter' })
@@ -60,7 +66,9 @@ it('should do nothing on enter with invalid value', () => {
 })
 
 it('should submit clicked suggestion', () => {
-  const { getByTitle, getByText } = render(<SearchInput loading={false} onSubmit={onSubmit} />)
+  const { getByTitle, getByText } = render(
+    <SearchInput loading={false} onSubmit={onSubmit} />,
+  )
   const input = getByTitle('RSS URL')
   fireEvent.focus(input)
   const suggestion = getByText('Suggestion 1')
@@ -69,7 +77,9 @@ it('should submit clicked suggestion', () => {
 })
 
 it('should submit selected suggestion', () => {
-  const { getByTitle } = render(<SearchInput loading={false} onSubmit={onSubmit} />)
+  const { getByTitle } = render(
+    <SearchInput loading={false} onSubmit={onSubmit} />,
+  )
   const input = getByTitle('RSS URL')
   fireEvent.focus(input)
   fireEvent.keyDown(input, { key: 'ArrowDown' })

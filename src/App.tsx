@@ -15,7 +15,9 @@ function App() {
       </header>
       <main className="m-4">
         {response && 'error' in response && (
-          <div className="bg-red-200 p-4 text-xl text-red-700">{response.error}</div>
+          <div className="bg-red-200 p-4 text-xl text-red-700">
+            {response.error}
+          </div>
         )}
         {response && 'feed' in response && (
           <SortableList title={response.feed.title} feed={response.items} />
