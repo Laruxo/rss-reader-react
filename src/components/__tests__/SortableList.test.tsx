@@ -1,7 +1,7 @@
 import { render, fireEvent, queryByText } from '@testing-library/react'
 import SortableList from '../SortableList'
 
-const feedList = [
+const feedList: FeedItem[] = [
   {
     guid: '111',
     title: 'Item A',
@@ -35,48 +35,50 @@ function expectListInOrder(list: HTMLElement, order: string[]) {
   })
 }
 
-it('should render empty list', () => {
-  const { queryByText, getByRole } = render(
-    <SortableList title="Feed Title" feed={[]} />,
-  )
-  expect(queryByText('Feed Title Feed')).toBeTruthy()
-  expect(getByRole('list').children).toHaveLength(0)
-})
+describe('SortableList', () => {
+  it('should render empty list', () => {
+    const { queryByText, getByRole } = render(
+      <SortableList title="Feed Title" feed={[]} />,
+    )
+    expect(queryByText('Feed Title Feed')).toBeTruthy()
+    expect(getByRole('list').children).toHaveLength(0)
+  })
 
-it('should render feed list', () => {
-  const { queryByText, getByRole } = render(
-    <SortableList title="Feed Title" feed={feedList} />,
-  )
-  expect(queryByText('Item A')).toBeTruthy()
-  expect(getByRole('list').children).toHaveLength(3)
-})
+  it('should render feed list', () => {
+    const { queryByText, getByRole } = render(
+      <SortableList title="Feed Title" feed={feedList} />,
+    )
+    expect(queryByText('Item A')).toBeTruthy()
+    expect(getByRole('list').children).toHaveLength(3)
+  })
 
-it('should sort list by date initially', () => {
-  const { getByRole, getByText } = render(
-    <SortableList title="Feed Title" feed={feedList} />,
-  )
-  expectListInOrder(getByRole('list'), ['Item C', 'Item B', 'Item A'])
-  fireEvent.click(getByText('Date ↓'))
-  expectListInOrder(getByRole('list'), ['Item A', 'Item B', 'Item C'])
-  expect(getByText('Date ↑')).toBeTruthy()
-})
+  it('should sort list by date initially', () => {
+    const { getByRole, getByText } = render(
+      <SortableList title="Feed Title" feed={feedList} />,
+    )
+    expectListInOrder(getByRole('list'), ['Item C', 'Item B', 'Item A'])
+    fireEvent.click(getByText('Date ↓'))
+    expectListInOrder(getByRole('list'), ['Item A', 'Item B', 'Item C'])
+    expect(getByText('Date ↑')).toBeTruthy()
+  })
 
-it('should sort list by name', () => {
-  const { getByRole, getByText } = render(
-    <SortableList title="Feed Title" feed={feedList} />,
-  )
-  fireEvent.click(getByText('Title'))
-  expectListInOrder(getByRole('list'), ['Item C', 'Item B', 'Item A'])
-  fireEvent.click(getByText('Title ↑'))
-  expectListInOrder(getByRole('list'), ['Item A', 'Item B', 'Item C'])
-  expect(getByText('Title ↓')).toBeTruthy()
-})
+  it('should sort list by name', () => {
+    const { getByRole, getByText } = render(
+      <SortableList title="Feed Title" feed={feedList} />,
+    )
+    fireEvent.click(getByText('Title'))
+    expectListInOrder(getByRole('list'), ['Item C', 'Item B', 'Item A'])
+    fireEvent.click(getByText('Title ↑'))
+    expectListInOrder(getByRole('list'), ['Item A', 'Item B', 'Item C'])
+    expect(getByText('Title ↓')).toBeTruthy()
+  })
 
-it('should render modal on item click', () => {
-  const { getByText, queryByRole } = render(
-    <SortableList title="Feed Title" feed={feedList} />,
-  )
-  expect(queryByRole('alertdialog')).toBeNull()
-  fireEvent.click(getByText('Item A'))
-  expect(queryByRole('alertdialog')).toBeTruthy()
+  it('should render modal on item click', () => {
+    const { getByText, queryByRole } = render(
+      <SortableList title="Feed Title" feed={feedList} />,
+    )
+    expect(queryByRole('alertdialog')).toBeNull()
+    fireEvent.click(getByText('Item A'))
+    expect(queryByRole('alertdialog')).toBeTruthy()
+  })
 })

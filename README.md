@@ -1,6 +1,6 @@
 # RSS Feed Reader
 
-Using React and Typescript
+Created using React and Typescript
 
 ## Commands
 

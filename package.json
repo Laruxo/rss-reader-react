@@ -1,5 +1,6 @@
 {
   "name": "rss-reader",
+  "description": "Simple RSS feed reader created using React.js",
   "author": "Laruxo (https://github.com/Laruxo)",
   "version": "2.0.0",
   "license": "MIT",
@@ -10,6 +11,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
+    "typecheck": "tsc -b",
     "test": "vitest",
     "lint": "eslint ."
   },

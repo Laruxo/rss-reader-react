@@ -1,6 +1,6 @@
 import { useMemo, type KeyboardEvent } from 'react'
 
-interface ListItemProps {
+type ListItemProps = {
   item: FeedItem
   onItemClick: () => void
 }
@@ -17,7 +17,7 @@ function ListItem({ item, onItemClick }: ListItemProps) {
     return div.innerText.substring(0, 120)
   }, [description])
 
-  function onKeyPress(e: KeyboardEvent) {
+  function onKeyDown(e: KeyboardEvent) {
     if (e.target === e.currentTarget && (e.key === 'Enter' || e.key === ' ')) {
       e.preventDefault()
       onItemClick()
@@ -29,11 +29,11 @@ function ListItem({ item, onItemClick }: ListItemProps) {
       <button
         className="w-full text-left p-4 outline-none hover:bg-gray-200 focus-visible:bg-gray-200"
         onClick={onItemClick}
-        onKeyPress={onKeyPress}
+        onKeyDown={onKeyDown}
       >
-        <p className="font-semibold">{title}</p>
-        <p className="text-xs">{pubDate}</p>
-        <p className="mt-2">{firstParagraph}</p>
+        <strong className="block">{title}</strong>
+        <span className="block text-xs">{pubDate}</span>
+        <span className="block mt-2">{firstParagraph}</span>
       </button>
     </li>
   )

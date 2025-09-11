@@ -3,7 +3,7 @@ import { useFetch } from '../hooks/useFetch'
 import { getHistory, addHistoryItem } from '../utils/feedHistory'
 import SearchInput from './SearchInput'
 
-interface FeedSearchProps {
+type FeedSearchProps = {
   setResponse: Dispatch<SetStateAction<ResponseState>>
 }
 
@@ -20,20 +20,7 @@ function FeedSearch({ setResponse }: FeedSearchProps) {
     }
   }, [response, setResponse])
 
-  return (
-    <form
-      name="feed search form"
-      className="flex items-center relative border-b border-white"
-      onSubmit={(e) => {
-        e.preventDefault()
-        const form = e.target as HTMLFormElement
-        const input = form[0] as HTMLInputElement
-        setUrl(input.value)
-      }}
-    >
-      <SearchInput loading={response === null} onSubmit={setUrl} />
-    </form>
-  )
+  return <SearchInput loading={response === null} onSubmit={setUrl} />
 }
 
 export default FeedSearch

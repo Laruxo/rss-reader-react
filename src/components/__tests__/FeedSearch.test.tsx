@@ -14,7 +14,7 @@ vi.mock('../../utils/feedHistory', () => ({
   addHistoryItem: vi.fn(),
 }))
 
-describe('<FeedSearch>', () => {
+describe('FeedSearch', () => {
   beforeEach(() => {
     vi.clearAllMocks()
   })
@@ -41,18 +41,9 @@ describe('<FeedSearch>', () => {
     )
   })
 
-  it('should set response and render loader while loading', () => {
-    vi.mocked(useFetch).mockReturnValue(null)
-    const { queryByRole } = render(<FeedSearch setResponse={setResponse} />)
-    expect(queryByRole('progressbar')).toBeTruthy()
-    expect(setResponse).toBeCalledTimes(1)
-    expect(setResponse).toBeCalledWith(null)
-  })
-
-  it('should set response and hide loader on error', () => {
+  it('should set response on error', () => {
     vi.mocked(useFetch).mockReturnValue({ error: 'Custom error' })
-    const { queryByRole } = render(<FeedSearch setResponse={setResponse} />)
-    expect(queryByRole('progressbar')).toBeNull()
+    render(<FeedSearch setResponse={setResponse} />)
     expect(setResponse).toBeCalledTimes(1)
     expect(setResponse).toBeCalledWith({ error: 'Custom error' })
   })

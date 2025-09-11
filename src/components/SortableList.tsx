@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react'
 import ListItem from './ListItem'
 import Modal from './Modal'
 
-interface SortableListProps {
+type SortableListProps = {
   title: string
   feed: FeedItem[]
 }
@@ -10,7 +10,7 @@ interface SortableListProps {
 type SortField = 'title' | 'pubDate'
 type SortDir = 'asc' | 'desc'
 
-interface SortingState {
+type SortingState = {
   field: SortField
   dir: SortDir
 }

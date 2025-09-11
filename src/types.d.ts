@@ -1,9 +1,9 @@
-interface FeedInfo {
+type FeedInfo = {
   title: string
   url: string
 }
 
-interface FeedItem {
+type FeedItem = {
   guid: string
   title: string
   pubDate: string
@@ -12,7 +12,7 @@ interface FeedItem {
   content: string
 }
 
-interface ApiResponse {
+type ApiResponse = {
   feed: FeedInfo
   items: FeedItem[]
 }

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, type KeyboardEvent } from 'react'
 import { getHistory } from '../utils/feedHistory'
 
-interface SearchInputProps {
+type SearchInputProps = {
   loading: boolean
   onSubmit: (value: string) => void
 }
@@ -52,7 +52,14 @@ function SearchInput({ loading, onSubmit }: SearchInputProps) {
   }
 
   return (
-    <>
+    <form
+      name="feed search form"
+      className="flex items-center relative border-b border-white"
+      onSubmit={(e) => {
+        e.preventDefault()
+        onSubmit(value)
+      }}
+    >
       <input
         type="url"
         name="url"
@@ -86,8 +93,8 @@ function SearchInput({ loading, onSubmit }: SearchInputProps) {
                 onMouseEnter={() => setActiveSuggestion(ind)}
                 onMouseDown={() => onSubmit(item.url)}
               >
-                <p className="truncate">{item.title}</p>
-                <p className="truncate text-xs">{item.url}</p>
+                <span className="block truncate">{item.title}</span>
+                <span className="block truncate text-xs">{item.url}</span>
               </button>
             </li>
           ))}
@@ -117,7 +124,7 @@ function SearchInput({ loading, onSubmit }: SearchInputProps) {
           {'\u276F'}
         </button>
       )}
-    </>
+    </form>
   )
 }
 
