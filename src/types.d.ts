@@ -12,9 +12,7 @@ type FeedItem = {
   content: string
 }
 
-type ApiResponse = {
+type RssApiResponse = {
   feed: FeedInfo
   items: FeedItem[]
 }
-
-type ResponseState = null | { error: string } | ApiResponse

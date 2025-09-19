@@ -36,12 +36,12 @@ function expectListInOrder(list: HTMLElement, order: string[]) {
 }
 
 describe('SortableList', () => {
-  it('should render empty list', () => {
-    const { queryByText, getByRole } = render(
+  it('should render empty list message', () => {
+    const { queryByText } = render(
       <SortableList title="Feed Title" feed={[]} />,
     )
     expect(queryByText('Feed Title Feed')).toBeTruthy()
-    expect(getByRole('list').children).toHaveLength(0)
+    expect(queryByText('No results')).toBeTruthy()
   })
 
   it('should render feed list', () => {

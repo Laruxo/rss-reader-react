@@ -56,15 +56,21 @@ function SortableList({ title, feed }: SortableListProps) {
           Date {sorting.field === 'pubDate' && direction}
         </button>
       </div>
-      <ol>
-        {sortedFeed.map((item) => (
-          <ListItem
-            key={item.guid}
-            item={item}
-            onItemClick={() => setActiveItem(item)}
-          />
-        ))}
-      </ol>
+      {sortedFeed.length === 0 ? (
+        <div className="bg-orange-200 p-4 text-xl text-orange-700">
+          No results
+        </div>
+      ) : (
+        <ol>
+          {sortedFeed.map((item) => (
+            <ListItem
+              key={item.guid}
+              item={item}
+              onItemClick={() => setActiveItem(item)}
+            />
+          ))}
+        </ol>
+      )}
       {activeItem && (
         <Modal item={activeItem} onClose={() => setActiveItem(null)} />
       )}

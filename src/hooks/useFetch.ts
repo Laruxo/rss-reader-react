@@ -1,38 +1,44 @@
 import { useEffect, useState } from 'react'
 
 async function doFetch(url: string, options?: RequestInit) {
-  const result = await fetch(url, options)
-  const json = await result.json()
-
-  if (json.status === 'ok') {
-    return json
-  } else {
+  const response = await fetch(url, options)
+  if (!response.ok) {
+    throw new Error(`[${response.status}] Failed to fetch`)
+  }
+  const json = await response.json()
+  if (json.status !== 'ok') {
     throw new Error(json.message)
   }
+  return json
 }
 
-export function useFetch(url: string): ResponseState {
-  const [response, setResponse] = useState<ResponseState>(null)
+export function useFetch<T>(url: string) {
+  const [response, setResponse] = useState<T | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const controller = new AbortController()
-    let didCancel = false
-    ;(async () => {
+
+    const fetchData = async () => {
+      setIsLoading(true)
+      setError(null)
       setResponse(null)
       try {
         const result = await doFetch(url, { signal: controller.signal })
-        if (didCancel) return
         setResponse(result)
+        setIsLoading(false)
       } catch (e) {
-        setResponse({ error: e instanceof Error ? e.message : 'Unknown error' })
+        if (e instanceof Error && e.name === 'AbortError') return
+        console.error(e)
+        setError(e instanceof Error ? e.message : 'Unknown error')
+        setIsLoading(false)
       }
-    })()
-
-    return () => {
-      controller.abort()
-      didCancel = true
     }
+    fetchData()
+
+    return () => controller.abort()
   }, [url])
 
-  return response
+  return { response, isLoading, error }
 }
