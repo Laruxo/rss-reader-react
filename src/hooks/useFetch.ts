@@ -13,26 +13,27 @@ async function doFetch(url: string, options?: RequestInit) {
 }
 
 export function useFetch<T>(url: string) {
-  const [response, setResponse] = useState<T | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [response, setResponse] = useState<
+    | { type: 'SUCCESS'; result: T }
+    | { type: 'ERROR'; error: string }
+    | { type: 'LOADING' }
+  >({ type: 'LOADING' })
 
   useEffect(() => {
     const controller = new AbortController()
 
     const fetchData = async () => {
-      setIsLoading(true)
-      setError(null)
-      setResponse(null)
+      setResponse({ type: 'LOADING' })
       try {
         const result = await doFetch(url, { signal: controller.signal })
-        setResponse(result)
-        setIsLoading(false)
+        setResponse({ type: 'SUCCESS', result })
       } catch (e) {
         if (e instanceof Error && e.name === 'AbortError') return
         console.error(e)
-        setError(e instanceof Error ? e.message : 'Unknown error')
-        setIsLoading(false)
+        setResponse({
+          type: 'ERROR',
+          error: e instanceof Error ? e.message : 'Unknown error',
+        })
       }
     }
     fetchData()
@@ -40,5 +41,5 @@ export function useFetch<T>(url: string) {
     return () => controller.abort()
   }, [url])
 
-  return { response, isLoading, error }
+  return response
 }

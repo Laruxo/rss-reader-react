@@ -63,20 +63,21 @@ describe('App', () => {
 
   it('should render error', () => {
     vi.mocked(useFetch).mockReturnValue({
+      type: 'ERROR',
       error: 'Custom error',
-      isLoading: false,
-      response: null,
     })
     const { queryByText } = render(<App />)
     expect(queryByText('Custom error')).toBeTruthy()
   })
 
+  it('should render loader', () => {
+    vi.mocked(useFetch).mockReturnValue({ type: 'LOADING' })
+    const { queryAllByRole } = render(<App />)
+    expect(queryAllByRole('progressbar')).toHaveLength(2)
+  })
+
   it('should render feed list', () => {
-    vi.mocked(useFetch).mockReturnValue({
-      response: feedMock,
-      isLoading: false,
-      error: null,
-    })
+    vi.mocked(useFetch).mockReturnValue({ type: 'SUCCESS', result: feedMock })
     const { queryByText, queryByRole } = render(<App />)
     expect(queryByText('Feed Title Feed')).toBeTruthy()
     expect(queryByText('Item 1')).toBeTruthy()
@@ -84,11 +85,7 @@ describe('App', () => {
   })
 
   it('should add feed to history on success response', () => {
-    vi.mocked(useFetch).mockReturnValue({
-      response: feedMock,
-      isLoading: false,
-      error: null,
-    })
+    vi.mocked(useFetch).mockReturnValue({ type: 'SUCCESS', result: feedMock })
     render(<App />)
     expect(addHistoryItem).toBeCalledWith(feedMock.feed)
   })
